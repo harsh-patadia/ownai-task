@@ -1,102 +1,91 @@
-# Node.js API Guide
+# **Node.js API Setup Guide**
 
-## Overview
-
-This project implements a Node.js REST API using **Express** and **TypeORM**. It provides functionality for managing user data, including **registration**, **login**, **user listing**, and **user detail viewing**. It also includes **role-based access control** where Admin and User roles are defined to control access to various endpoints.
+#### This project is a **REST API** using **Node.js, Express, TypeORM, and MySQL**. It includes **User Registration, Login, Role-based Access, and User Management**.
 
 ---
 
-## Technologies Used
+## **1. Install & Setup**
 
-- **Node.js**: JavaScript runtime for coding.
-- **Express.js**: for handling HTTP requests.
-- **TypeORM**: ORM for interacting with mysql database.
-- **mysql**: Database for storing user and role data.
-- **JWT**: JSON Web Tokens for authentication.
-- **Bcrypt &Express Validator**: For hiding passwords & for input validation.
----
+### **Step 1: Clone the Project**
 
-## Setup & Installation
-
-### 1. Clone the repository
 ```bash
-git clone github.com/harsh-patadia/ownai-task
+git clone https://github.com/harsh-patadia/ownai-task
 cd ownai-task
 ```
 
-### 2. Install Dependencies
+### **Step 2: Install Dependencies**
+
 ```bash
 npm install
 ```
 
-### 3. Setup Environment Variables
-Create or update new env variables in `.env` file in the root directory.
+### **Step 3: Configure `.env` File**
 
-### 5. Start the Server
+configure `.env` file as per your setup:
+
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASS=
+DB_NAME=task_ownAI
+```
+
+### **Step 4: Setup Database**
+
+- Start MySQL.
+- Create database ( `task_ownAI`).
+
+### **Step 5: start project**
+
 ```bash
 npm start
 ```
 
-The server will run on `http://localhost:3000`.
-liveurl: https://ownai-task.onrender.com
+Your API runs at:
+
+```
+http://localhost:3000
+```
 
 ---
 
-## API Endpoints
+## **2. API Endpoints**
 
 ### **User Routes**
-- **POST /user/register**: Registers a new user.
-  - **Body**: `{ name, email, password, role(role id), phone, city(city id), country(country id) }`
 
-
-- **POST /user/login**: Login user.
-  - **Body**: `{ email, password }`
-
-- **GET /user/:id**: View details of a specific user (staff or admin).
+**Register User** → `POST /api/register` (name, email, password, phone, role, city, country)
+**Login User** → `POST /api/login` (email, password)
+**View User Details** → `GET /api/user/:id`(login user id)
 
 ### **Admin Routes**
-- **GET /admin/users/list**: Lists all users (admin only).
-  - **token**: also require token of admin logins.
 
-- **GET /admin/user/view/:userId**: View details of a specific user (admin only).
-  - **params**:  `userId` (also require token of admin logins).
+**List All Users** → `GET /admin/users/list` (Admin only) **search(`name or email`), country(`country id`), city((`city id`))**  
+**View Specific User** → `GET /admin/user/view/:userId` (Admin only) (ser id)
 
 ### **Public Routes**
-- **GET /public/country/dropdown**: Fetches a list of countries.
-  - **output**: List of countries.
 
-- **GET /public/city/dropdown/:countryId**: Fetches a list of cities based on the `countryId`.
-  - **output**: List of cities for the selected country.
+**Get Countries** → `GET /public/country/dropdown`  
+**Get Cities by Country** → `GET /public/city/dropdown/:countryId`(country id)
 
 ---
 
-## Database Configuration
+---
 
-The application uses **mysql** for storing user data and other related information like roles, countries, and cities.
+## **4. Validation & Security**
 
-### **Entities**
-
-- **User**: Stores user details like name, email, phone, role, city, country.
-- **Role**: Stores user roles (Admin/Staff).
-- **Country**: Stores country details.
-- **City**: Stores city details.
-
-The application is set up with **TypeORM** to handle database operations.
+- **express-validator**
+- **bcryptjs**
+- **JWT (JSON Web Token)**
+- **Error Handling middelware**
 
 ---
 
-## Validation
+## **5. Notes**
 
-The project uses **express-validator** to validate user input. Common validation tasks include checking if fields are required, ensuring proper formats for email and phone, and ensuring the password meets security criteria.
-
----
-
-## Error Handling
-
-API uses error handling middleware so errors caught and meaningful messages returned to client. 
-Errors include validation errors, database connection issues, and unauthorized access errors.
-
----
+- **Use Postman** to test API.
+- **Set up MySQL correctly** before running the server.
+- **Modify `.env` file** with correct credentials.
 
 ## I took some References from
 
